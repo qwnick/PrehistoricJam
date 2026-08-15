@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2acaac6c5d45c9b52f770dfd9e6bfb, type: 3}
+  m_Name: New AutoTile Template
+  m_EditorClassIdentifier: Unity.2D.Tilemap.Extras.Editor::UnityEngine.Tilemaps.AutoTileTemplate
+  width: 256
+  height: 256
+  maskType: 1
+  sprites:
+  - x: 0
+    y: 224
+    mask: 4
+  - x: 32
+    y: 224
+    mask: 7
+  - x: 64
+    y: 224
+    mask: 7
+  - x: 96
+    y: 224
+    mask: 7
+  - x: 128
+    y: 224
+    mask: 1
+  - x: 160
+    y: 224
+    mask: 457
+  - x: 192
+    y: 224
+    mask: 320
+  - x: 224
+    y: 224
+    mask: 484
+  - x: 0
+    y: 192
+    mask: 292
+  - x: 32
+    y: 192
+    mask: 457
+  - x: 96
+    y: 192
+    mask: 484
+  - x: 128
+    y: 192
+    mask: 73
+  - x: 160
+    y: 192
+    mask: 65
+  - x: 224
+    y: 192
+    mask: 260
+  - x: 0
+    y: 160
+    mask: 292
+  - x: 64
+    y: 160
+    mask: 16
+  - x: 128
+    y: 160
+    mask: 73
+  - x: 160
+    y: 160
+    mask: 79
+  - x: 192
+    y: 160
+    mask: 5
+  - x: 224
+    y: 160
+    mask: 295
+  - x: 0
+    y: 128
+    mask: 292
+  - x: 32
+    y: 128
+    mask: 79
+  - x: 96
+    y: 128
+    mask: 295
+  - x: 128
+    y: 128
+    mask: 73
+  - x: 160
+    y: 128
+    mask: 455
+  - x: 192
+    y: 128
+    mask: 455
+  - x: 224
+    y: 128
+    mask: 361
+  - x: 0
+    y: 96
+    mask: 256
+  - x: 32
+    y: 96
+    mask: 448
+  - x: 64
+    y: 96
+    mask: 448
+  - x: 96
+    y: 96
+    mask: 448
+  - x: 128
+    y: 96
+    mask: 64
+  - x: 160
+    y: 96
+    mask: 511
+  - x: 224
+    y: 96
+    mask: 365
+  - x: 0
+    y: 64
+    mask: 463
+  - x: 32
+    y: 64
+    mask: 487
+  - x: 64
+    y: 64
+    mask: 493
+  - x: 96
+    y: 64
+    mask: 367
+  - x: 192
+    y: 64
+    mask: 495
+  - x: 224
+    y: 64
+    mask: 365
+  - x: 0
+    y: 32
+    mask: 292
+  - x: 32
+    y: 32
+    mask: 73
+  - x: 64
+    y: 32
+    mask: 448
+  - x: 96
+    y: 32
+    mask: 7
+  - x: 128
+    y: 32
+    mask: 292
+  - x: 160
+    y: 32
+    mask: 73
+  - x: 192
+    y: 32
+    mask: 448
+  - x: 224
+    y: 32
+    mask: 448
+  - x: 128
+    y: 0
+    mask: 292
+  - x: 160
+    y: 0
+    mask: 73
+  - x: 192
+    y: 0
+    mask: 7
+  - x: 224
+    y: 0
+    mask: 7
