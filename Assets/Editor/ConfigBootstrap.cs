@@ -16,6 +16,7 @@ public static class ConfigBootstrap
 	private const string Root = "Assets/Config";
 	private const string EnemiesFolder = Root + "/Enemies";
 	private const string AbilitiesFolder = Root + "/Abilities";
+	private const string ZonesFolder = Root + "/Zones";
 
 	[MenuItem("PrehistoricJam/Setup/Create Default Config Assets")]
 	public static void CreateDefaults()
@@ -23,6 +24,7 @@ public static class ConfigBootstrap
 		EnsureFolder(Root);
 		EnsureFolder(EnemiesFolder);
 		EnsureFolder(AbilitiesFolder);
+		EnsureFolder(ZonesFolder);
 
 		var player = LoadOrCreate<PlayerTuning>($"{Root}/PlayerTuning.asset", out _);
 		var input = LoadOrCreate<InputBindings>($"{Root}/InputBindings.asset", out _);
@@ -45,11 +47,20 @@ public static class ConfigBootstrap
 			CreateAbility(AbilityId.Wings)
 		};
 
+		var zones = new List<ZoneTuning>
+		{
+			CreateZone(ZoneType.Forest),
+			CreateZone(ZoneType.River),
+			CreateZone(ZoneType.Desert),
+			CreateZone(ZoneType.Rocks)
+		};
+
 		var config = LoadOrCreate<GameConfig>($"{Root}/GameConfig.asset", out _);
 		config.player = player;
 		config.input = input;
 		config.enemies = enemies;
 		config.abilities = abilities;
+		config.zones = zones;
 		EditorUtility.SetDirty(config);
 
 		AssetDatabase.SaveAssets();
@@ -91,6 +102,7 @@ public static class ConfigBootstrap
 				asset.dashCooldown = 0.8f;
 				asset.dashStaminaCost = 1f;
 				asset.wanderRadius = 4f;
+				asset.navDomain = NavDomain.Land;
 				break;
 
 			// No stamina at all: it sits still, then flees at full speed forever.
@@ -105,6 +117,8 @@ public static class ConfigBootstrap
 				asset.usesStamina = false;
 				asset.canDash = false;
 				asset.wanderRadius = 2f;
+				asset.navDomain = NavDomain.Air;
+				asset.fleeDistanceInDashes = 10f;   // "flies to the other side of the zone"
 				break;
 
 			// "Swim speed same as snake movement speed", rests on shore for a
@@ -120,6 +134,10 @@ public static class ConfigBootstrap
 				asset.staminaRegenPerSecond = 3f;
 				asset.staminaRegenDelay = 0.5f;
 				asset.wanderRadius = 3f;
+				asset.navDomain = NavDomain.Amphibious;
+				asset.staminaDrainPerSecond = 1f;   // burns while swimming
+				asset.shoreRestSeconds = 2f;
+				asset.fleeDistanceInDashes = 4f;
 				break;
 
 			// Genuinely faster than the snake and spooked from six dashes away —
@@ -135,6 +153,11 @@ public static class ConfigBootstrap
 				asset.staminaRegenPerSecond = 1f;
 				asset.staminaRegenDelay = 2f;
 				asset.wanderRadius = 5f;
+				asset.navDomain = NavDomain.Land;
+				asset.staminaDrainPerSecond = 0.5f; // bleeds slowly away from water
+				asset.drinkSeconds = 6f;
+				asset.nearWaterDistance = 2f;
+				asset.fleeDistanceInDashes = 8f;
 				break;
 
 			// "3-4 flights" of stamina, refilled slowly on the ground (~20s) or
@@ -151,6 +174,49 @@ public static class ConfigBootstrap
 				asset.staminaRegenDelay = 1f;
 				asset.corpseNutrition = 4f;
 				asset.wanderRadius = 3f;
+				asset.navDomain = NavDomain.Air;
+				asset.flightStaminaCost = 1f;       // 4 stamina => 4 take-offs
+				asset.corpseEatSeconds = 6f;
+				asset.lowStaminaThreshold = 0.5f;
+				asset.fleeDistanceInDashes = 5f;
+				break;
+		}
+
+		EditorUtility.SetDirty(asset);
+		return asset;
+	}
+
+	// ---- Zones ----
+
+	private static ZoneTuning CreateZone(ZoneType type)
+	{
+		var asset = LoadOrCreate<ZoneTuning>($"{ZonesFolder}/{type}.asset", out bool created);
+		if (!created) return asset;
+
+		asset.type = type;
+		asset.displayName = type.ToString();
+
+		switch (type)
+		{
+			case ZoneType.Forest:
+				break;
+
+			case ZoneType.River:
+				asset.gated = true;
+				asset.requiredAbility = AbilityId.Swim;
+				break;
+
+			// The one place that can kill you. Drain is sized so that crossing is
+			// survivable only once Water Storage has tripled the tank.
+			case ZoneType.Desert:
+				asset.waterDrainPerSecond = 2f;
+				asset.gated = true;
+				asset.requiredAbility = AbilityId.WaterStorage;
+				break;
+
+			case ZoneType.Rocks:
+				asset.gated = true;
+				asset.requiredAbility = AbilityId.Wings;
 				break;
 		}
 

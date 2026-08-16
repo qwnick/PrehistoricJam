@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
   id: 2
   displayName: Swim
-  description: 
+  description: Cross the river and hunt from the water.
   icon: {fileID: 0}
   isPassive: 0
   unlockedBy: 2
   killsRequired: 3
   staminaCost: 0
-  staminaDrainPerSecond: 0
+  staminaDrainPerSecond: 10
   cooldown: 0
+  range: 0
+  duration: 0

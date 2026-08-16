@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b2d51ddbe934d6294315f9d37b40b2, type: 3}
+  m_Name: Rocks
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTuning
+  type: 3
+  displayName: Rocks
+  waterDrainPerSecond: 0
+  gated: 1
+  requiredAbility: 4

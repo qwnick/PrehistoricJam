@@ -21,6 +21,9 @@ public class GameConfig : ScriptableObject
 	[Header("Enemies — one asset per species")]
 	public List<EnemyTuning> enemies = new();
 
+	[Header("Zones — one asset per zone")]
+	public List<ZoneTuning> zones = new();
+
 	public AbilityDefinition GetAbility(AbilityId id)
 	{
 		foreach (var ability in abilities)
@@ -39,6 +42,13 @@ public class GameConfig : ScriptableObject
 	{
 		foreach (var enemy in enemies)
 			if (enemy != null && enemy.species == species) return enemy;
+		return null;
+	}
+
+	public ZoneTuning GetZone(ZoneType type)
+	{
+		foreach (var zone in zones)
+			if (zone != null && zone.type == type) return zone;
 		return null;
 	}
 }

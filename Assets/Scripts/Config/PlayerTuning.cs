@@ -66,10 +66,9 @@ public class PlayerTuning : ScriptableObject
 	[Range(0f, 1f)] public float exhaustedSpeedFactor = 0.4f;
 
 	[Header("Water — the only fail state right now")]
+	// How fast water DRAINS is a property of the zone, not of the hunter, so it
+	// lives on ZoneTuning. Only the capacity and the refill rate belong here.
 	public float maxWater = 100f;
-
-	[Tooltip("Water lost per second while in the desert. Hitting zero is game over.")]
-	public float desertWaterDrainPerSecond = 2f;
 
 	[Tooltip("Water regained per second while next to water.")]
 	public float waterRefillPerSecond = 25f;
