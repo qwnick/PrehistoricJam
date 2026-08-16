@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 7436832628155732910}
   - component: {fileID: 1118603026564908836}
   - component: {fileID: 1125384474411503325}
-  - component: {fileID: 4162378650578289370}
   m_Layer: 9
   m_Name: Crocodile
   m_TagString: Untagged
@@ -257,17 +256,3 @@ MonoBehaviour:
   waypointArriveRadius: 0.3
   repathInterval: 0.5
   drawDebugGizmos: 1
---- !u!114 &4162378650578289370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6162417410472337344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 659e3b23783434812b9c5a8c1adf654f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Concealment
-  renderers:
-  - {fileID: 5323248171004010533}

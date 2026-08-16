@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6744507de2c5c4d74b843a0fb72e2ad6, type: 3}
   m_Name: WaterStorage
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
-  id: 0
-  displayName: 
+  id: 3
+  displayName: Water Storage
   description: 
   icon: {fileID: 0}
-  isPassive: 0
+  isPassive: 1
   unlockedBy: 3
   killsRequired: 3
   staminaCost: 0

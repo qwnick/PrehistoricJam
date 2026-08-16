@@ -15,14 +15,14 @@ MonoBehaviour:
   species: 4
   displayName: Vulturesaur
   health: 2
-  walkSpeedFactor: 0.35
-  runSpeedFactor: 0.9
-  fleeRadiusInDashes: 1
-  calmRadiusInDashes: 1.6
+  walkSpeedFactor: 0.2
+  runSpeedFactor: 1.1
+  fleeRadiusInDashes: 3
+  calmRadiusInDashes: 4
   usesStamina: 1
-  maxStamina: 3
-  staminaRegenPerSecond: 1
-  staminaRegenDelay: 1.5
+  maxStamina: 4
+  staminaRegenPerSecond: 0.2
+  staminaRegenDelay: 1
   canDash: 0
   dashTriggerRadiusInDashes: 0.5
   dashDistance: 3
@@ -30,7 +30,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashStaminaCost: 1
   navDomain: 3
-  fleeDistanceInDashes: 6
+  fleeDistanceInDashes: 5
   staminaDrainPerSecond: 1
   flightStaminaCost: 1
   shoreRestSeconds: 2
@@ -38,8 +38,8 @@ MonoBehaviour:
   nearWaterDistance: 2
   lowStaminaThreshold: 0.5
   corpseEatSeconds: 6
-  wanderRadius: 4
+  wanderRadius: 3
   wanderPauseMin: 1
   wanderPauseMax: 3
   corpseLifetime: 60
-  corpseNutrition: 1
+  corpseNutrition: 4
