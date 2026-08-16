@@ -22,3 +22,5 @@ MonoBehaviour:
   staminaCost: 0
   staminaDrainPerSecond: 0
   cooldown: 0
+  range: 20
+  duration: 5

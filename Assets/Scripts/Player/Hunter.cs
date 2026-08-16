@@ -28,6 +28,9 @@ public class Hunter : MonoBehaviour
 	public KillTracker Kills { get; private set; }
 	public HunterMovement Movement { get; private set; }
 
+	/// <summary>Optional until the desert exists — null is a valid state.</summary>
+	public WaterMeter Water { get; private set; }
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -45,10 +48,14 @@ public class Hunter : MonoBehaviour
 		Abilities = GetComponent<AbilityInventory>();
 		Kills = GetComponent<KillTracker>();
 		Movement = GetComponent<HunterMovement>();
+		Water = GetComponent<WaterMeter>();
 
 		Stamina.Configure(Tuning.maxStamina, Tuning.staminaRegenPerSecond, Tuning.staminaRegenDelay);
 		Abilities.Initialize(config);
 		Kills.Initialize(config, Abilities);
+
+		// Abilities read this in Start, so it has to be ready before then.
+		if (Water != null) Water.Initialize(Tuning);
 
 		Input = new InputReader(config.input);
 	}

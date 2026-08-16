@@ -1,8 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Tank controls: A/D turn the body, W/S drive along it. Also executes the dash,
-/// because a dash is a movement override rather than a separate actor.
+/// Tank controls: A/D turn the body, W/S drive along it.
+///
+/// This is the single owner of the snake's velocity. Abilities never write to the
+/// Rigidbody themselves — they decide what should happen and call in here, which
+/// keeps "who is moving the snake right now" answerable in one file.
 ///
 /// Uses linearVelocity rather than MovePosition so the snake collides properly
 /// with the world and with prey instead of tunnelling through it.
@@ -16,14 +19,21 @@ public class HunterMovement : MonoBehaviour
 	private Rigidbody2D body;
 
 	private Vector2 dashDirection;
+	private float dashSpeed;
 	private float dashEndTime;
 
 	public bool IsDashing => Time.time < dashEndTime;
 
-	private PlayerTuning Tuning => hunter.Tuning;
+	/// <summary>Set by the Swim and Wings abilities; decides the speed factor.</summary>
+	public LocomotionMode Mode { get; set; } = LocomotionMode.Ground;
+
+	/// <summary>Set while a sustained ability is running on an empty stamina bar.</summary>
+	public bool IsExhausted { get; set; }
 
 	/// <summary>The body's facing. Sprites in this project point up.</summary>
 	public Vector2 Facing => transform.up;
+
+	private PlayerTuning Tuning => hunter.Tuning;
 
 	private void Awake()
 	{
@@ -31,21 +41,15 @@ public class HunterMovement : MonoBehaviour
 		hunter = GetComponent<Hunter>();
 	}
 
-	private void Update()
-	{
-		if (hunter.Input == null) return;
-		if (hunter.Input.DashPressed) TryDash();
-	}
-
 	private void FixedUpdate()
 	{
 		if (hunter.Input == null) return;
 
 		// A dash owns the body outright — no steering mid-dash. With tank controls
-		// that is the whole point: you commit to a direction before you launch.
+		// that is the point: you commit to a heading before you launch.
 		if (IsDashing)
 		{
-			body.linearVelocity = dashDirection * Tuning.DashSpeed;
+			body.linearVelocity = dashDirection * dashSpeed;
 			return;
 		}
 
@@ -53,28 +57,37 @@ public class HunterMovement : MonoBehaviour
 		body.MoveRotation(body.rotation - turn * Tuning.turnSpeed * Time.fixedDeltaTime);
 
 		float throttle = hunter.Input.Throttle;
-		float speed = Tuning.moveSpeed * (throttle >= 0f ? 1f : Tuning.reverseSpeedFactor);
+		float speed = Tuning.moveSpeed * SpeedFactor * (throttle >= 0f ? 1f : Tuning.reverseSpeedFactor);
 		body.linearVelocity = Facing * (throttle * speed);
 	}
 
-	/// <summary>Returns false if the dash is not unlocked, still cooling down, or unaffordable.</summary>
-	public bool TryDash()
+	private float SpeedFactor
 	{
-		var definition = hunter.Config.GetAbility(AbilityId.Dash);
-		if (definition == null)
+		get
 		{
-			Debug.LogWarning("[HunterMovement] No Dash AbilityDefinition in the GameConfig.", this);
-			return false;
+			float factor = Mode switch
+			{
+				LocomotionMode.Swimming => Tuning.swimSpeedFactor,
+				LocomotionMode.Flying => Tuning.flySpeedFactor,
+				_ => 1f
+			};
+
+			// The hunter has no health, so running dry has to bite somewhere —
+			// it costs speed rather than killing.
+			if (IsExhausted) factor *= Tuning.exhaustedSpeedFactor;
+
+			return factor;
 		}
+	}
 
-		if (IsDashing) return false;
-		if (!hunter.Abilities.CanUse(definition, hunter.Stamina)) return false;
-		if (!hunter.Stamina.TryConsume(definition.staminaCost)) return false;
+	/// <summary>Called by DashAbility once it has paid the cost.</summary>
+	public void BeginDash(Vector2 direction, float speed, float duration)
+	{
+		if (direction.sqrMagnitude < 0.0001f) return;
 
-		dashDirection = Facing;
-		dashEndTime = Time.time + Tuning.dashDuration;
-		hunter.Abilities.StartCooldown(AbilityId.Dash, definition.cooldown);
-		return true;
+		dashDirection = direction.normalized;
+		dashSpeed = speed;
+		dashEndTime = Time.time + duration;
 	}
 
 	private void OnDrawGizmosSelected()

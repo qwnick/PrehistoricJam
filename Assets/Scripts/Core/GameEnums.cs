@@ -28,3 +28,11 @@ public enum ZoneType
 	Desert,
 	Rocks
 }
+
+/// <summary>How the hunter is currently getting around. Drives its speed factor.</summary>
+public enum LocomotionMode
+{
+	Ground,
+	Swimming,
+	Flying
+}

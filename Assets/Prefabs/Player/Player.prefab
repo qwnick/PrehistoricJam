@@ -18,6 +18,13 @@ GameObject:
   - component: {fileID: 5303720284067938304}
   - component: {fileID: 5073904597620577167}
   - component: {fileID: 5812293606824466280}
+  - component: {fileID: 4895598396211252997}
+  - component: {fileID: 3346382630095544488}
+  - component: {fileID: 1078537104475577022}
+  - component: {fileID: 4924114670925091115}
+  - component: {fileID: 2247342833407519229}
+  - component: {fileID: 6802829430500263239}
+  - component: {fileID: 7367925518588972020}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -229,3 +236,94 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   drawDebugGizmos: 1
+--- !u!114 &4895598396211252997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4056a9a783bb4ef692b9d57c51e9c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashAbility
+--- !u!114 &3346382630095544488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a84a68d99cc74edf8e63aa690508faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EcholocationAbility
+  drawDebugGizmos: 1
+--- !u!114 &1078537104475577022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfc00211f7214193aec7a5432720754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwimAbility
+--- !u!114 &4924114670925091115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc1700b9caa341c6aa43764471a44e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterStorageAbility
+--- !u!114 &2247342833407519229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a3139ef971948cdb86fdc28a332f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlightAbility
+--- !u!114 &6802829430500263239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb47af3d7181f4d638f8a5f0d53851b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SurfaceSensor
+  waterMask:
+    serializedVersion: 2
+    m_Bits: 16
+  inWaterRadius: 0.2
+  nearWaterRadius: 2
+  drawDebugGizmos: 1
+--- !u!114 &7367925518588972020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db8940dce9824bc588bed4ec2b3e79d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterMeter

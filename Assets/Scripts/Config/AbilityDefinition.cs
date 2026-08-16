@@ -31,4 +31,11 @@ public class AbilityDefinition : ScriptableObject
 	public float staminaDrainPerSecond;
 
 	public float cooldown;
+
+	[Header("Shape — meaning depends on the ability")]
+	[Tooltip("Echolocation: how far the pulse reaches.")]
+	public float range;
+
+	[Tooltip("Echolocation: how long revealed prey stays visible.")]
+	public float duration;
 }

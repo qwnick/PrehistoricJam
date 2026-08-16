@@ -62,6 +62,9 @@ public class PlayerTuning : ScriptableObject
 	[Range(0f, 3f)] public float swimSpeedFactor = 1f;
 	[Range(0f, 3f)] public float flySpeedFactor = 1.3f;
 
+	[Tooltip("Speed penalty while swimming or flying on an empty stamina bar. The hunter cannot die, so exhaustion has to cost speed instead.")]
+	[Range(0f, 1f)] public float exhaustedSpeedFactor = 0.4f;
+
 	[Header("Water — the only fail state right now")]
 	public float maxWater = 100f;
 

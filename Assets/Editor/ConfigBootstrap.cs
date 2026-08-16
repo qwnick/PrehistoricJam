@@ -184,6 +184,8 @@ public static class ConfigBootstrap
 				asset.unlockedBy = Species.Pterosaur;
 				asset.staminaCost = 25f;
 				asset.cooldown = 60f;
+				asset.range = 12f;      // ~3 dashes: has to reach across the river
+				asset.duration = 5f;    // long enough to line up a dash on what it finds
 				break;
 
 			case AbilityId.Swim:
