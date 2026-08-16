@@ -1,67 +1,92 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-[RequireComponent(typeof(Rigidbody2D))]
 
+/// <summary>
+/// Tank controls: A/D turn the body, W/S drive along it. Also executes the dash,
+/// because a dash is a movement override rather than a separate actor.
+///
+/// Uses linearVelocity rather than MovePosition so the snake collides properly
+/// with the world and with prey instead of tunnelling through it.
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
 public class HunterMovement : MonoBehaviour
 {
-	[Header("Tank Settings")]
-	public float moveSpeed = 5f;
-	public float turnSpeed = 200f;
+	[SerializeField] private bool drawDebugGizmos = true;
 
-	private Rigidbody2D rb;
-	private Vector2 moveInput;
+	private Hunter hunter;
+	private Rigidbody2D body;
 
-	// Define the input action directly in code
-	private InputAction moveAction;
+	private Vector2 dashDirection;
+	private float dashEndTime;
 
-	void Awake()
+	public bool IsDashing => Time.time < dashEndTime;
+
+	private PlayerTuning Tuning => hunter.Tuning;
+
+	/// <summary>The body's facing. Sprites in this project point up.</summary>
+	public Vector2 Facing => transform.up;
+
+	private void Awake()
 	{
-		// Set up a composite 2D Vector action (X for turning, Y for moving)
-		moveAction = new InputAction(type: InputActionType.Value, expectedControlType: "Vector2");
-
-		// Bind WASD and Arrow Keys to this action
-		moveAction.AddCompositeBinding("2DVector")
-			.With("Up", "<Keyboard>/w")
-			.With("Down", "<Keyboard>/s")
-			.With("Left", "<Keyboard>/a")
-			.With("Right", "<Keyboard>/d")
-			.With("Up", "<Keyboard>/upArrow")
-			.With("Down", "<Keyboard>/downArrow")
-			.With("Left", "<Keyboard>/leftArrow")
-			.With("Right", "<Keyboard>/rightArrow");
+		body = GetComponent<Rigidbody2D>();
+		hunter = GetComponent<Hunter>();
 	}
 
-	// You MUST enable and disable InputActions when the object is toggled
-	void OnEnable()
+	private void Update()
 	{
-		moveAction.Enable();
+		if (hunter.Input == null) return;
+		if (hunter.Input.DashPressed) TryDash();
 	}
 
-	void OnDisable()
+	private void FixedUpdate()
 	{
-		moveAction.Disable();
+		if (hunter.Input == null) return;
+
+		// A dash owns the body outright — no steering mid-dash. With tank controls
+		// that is the whole point: you commit to a direction before you launch.
+		if (IsDashing)
+		{
+			body.linearVelocity = dashDirection * Tuning.DashSpeed;
+			return;
+		}
+
+		float turn = hunter.Input.Turn;
+		body.MoveRotation(body.rotation - turn * Tuning.turnSpeed * Time.fixedDeltaTime);
+
+		float throttle = hunter.Input.Throttle;
+		float speed = Tuning.moveSpeed * (throttle >= 0f ? 1f : Tuning.reverseSpeedFactor);
+		body.linearVelocity = Facing * (throttle * speed);
 	}
 
-	void Start()
+	/// <summary>Returns false if the dash is not unlocked, still cooling down, or unaffordable.</summary>
+	public bool TryDash()
 	{
-		rb = GetComponent<Rigidbody2D>();
+		var definition = hunter.Config.GetAbility(AbilityId.Dash);
+		if (definition == null)
+		{
+			Debug.LogWarning("[HunterMovement] No Dash AbilityDefinition in the GameConfig.", this);
+			return false;
+		}
+
+		if (IsDashing) return false;
+		if (!hunter.Abilities.CanUse(definition, hunter.Stamina)) return false;
+		if (!hunter.Stamina.TryConsume(definition.staminaCost)) return false;
+
+		dashDirection = Facing;
+		dashEndTime = Time.time + Tuning.dashDuration;
+		hunter.Abilities.StartCooldown(AbilityId.Dash, definition.cooldown);
+		return true;
 	}
 
-	void Update()
+	private void OnDrawGizmosSelected()
 	{
-		// 1. Read the input value as a Vector2
-		// x = A/D (turning), y = W/S (forward/backward)
-		moveInput = moveAction.ReadValue<Vector2>();
-	}
+		// The dash distance is the yardstick every enemy flee radius is measured
+		// against, so seeing it in the scene view is what makes tuning possible.
+		if (!drawDebugGizmos) return;
 
-	void FixedUpdate()
-	{
-		// 2. Apply Rotation (using moveInput.x)
-		float newRotation = rb.rotation - moveInput.x * turnSpeed * Time.fixedDeltaTime;
-		rb.MoveRotation(newRotation);
+		var tuning = hunter != null ? hunter.Tuning : null;
+		if (tuning == null) return;
 
-		// 3. Apply Movement (using moveInput.y)
-		Vector2 movementDirection = transform.up;
-		rb.MovePosition(rb.position + movementDirection * moveInput.y * moveSpeed * Time.fixedDeltaTime);
+		Gizmos.color = new Color(0.3f, 0.8f, 1f, 0.9f);
+		Gizmos.DrawWireSphere(transform.position, tuning.dashDistance);
 	}
 }

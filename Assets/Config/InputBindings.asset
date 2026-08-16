@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b55bfdbb4195456db27f061863804d0, type: 3}
+  m_Name: InputBindings
+  m_EditorClassIdentifier: Assembly-CSharp::InputBindings
+  forward:
+  - <Keyboard>/w
+  - <Keyboard>/upArrow
+  backward:
+  - <Keyboard>/s
+  - <Keyboard>/downArrow
+  turnLeft:
+  - <Keyboard>/a
+  - <Keyboard>/leftArrow
+  turnRight:
+  - <Keyboard>/d
+  - <Keyboard>/rightArrow
+  attack:
+  - <Keyboard>/1
+  dash:
+  - <Keyboard>/2
+  opponentSearch:
+  - <Keyboard>/3
+  eat:
+  - <Keyboard>/4
+  toggleFly:
+  - <Keyboard>/5

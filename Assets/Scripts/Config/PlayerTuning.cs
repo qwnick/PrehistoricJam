@@ -41,13 +41,14 @@ public class PlayerTuning : ScriptableObject
 	public float attackCooldown = 0.5f;
 	public float attackStaminaCost = 15f;
 
-	[Header("Dash")]
+	[Header("Dash — geometry only")]
+	// Stamina cost and cooldown live on the Dash AbilityDefinition, not here.
+	// Rule for the whole project: unlockable abilities keep their costs in
+	// AbilityDefinition, innate actions (move, attack, eat) keep them here.
 	[Tooltip("THE reference radius for the whole roster. Enemies store flee radii as multiples of this.")]
 	public float dashDistance = 4f;
 
 	public float dashDuration = 0.2f;
-	public float dashCooldown = 0.4f;
-	public float dashStaminaCost = 30f;
 
 	[Header("Eating")]
 	public float eatRadius = 1.2f;
@@ -55,13 +56,11 @@ public class PlayerTuning : ScriptableObject
 	[Tooltip("Stamina returned by eating a corpse. Eating is also what advances the kill counters.")]
 	public float eatStaminaRestore = 40f;
 
-	[Header("Swim (unlocked by Crocodile)")]
+	// Swim and Wings are abilities, so their stamina drain lives on their
+	// AbilityDefinition. Only the movement geometry belongs here.
+	[Header("Swim / Wings — speed only")]
 	[Range(0f, 3f)] public float swimSpeedFactor = 1f;
-	public float swimStaminaDrainPerSecond = 10f;
-
-	[Header("Wings (unlocked by Vulturesaur)")]
 	[Range(0f, 3f)] public float flySpeedFactor = 1.3f;
-	public float flyStaminaDrainPerSecond = 15f;
 
 	[Header("Water — the only fail state right now")]
 	public float maxWater = 100f;
