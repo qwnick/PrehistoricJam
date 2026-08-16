@@ -14,6 +14,13 @@ public class HunterHud : MonoBehaviour
 	[Tooltip("An Image set to Filled — its fillAmount is driven directly.")]
 	[SerializeField] private Image staminaFill;
 
+	[Header("Water")]
+	[Tooltip("An Image set to Filled. Currently the only thing that can end a run.")]
+	[SerializeField] private Image waterFill;
+
+	[Tooltip("Optional wrapper hidden when the hunter has no WaterMeter at all.")]
+	[SerializeField] private GameObject waterRoot;
+
 	[Header("Progress")]
 	[SerializeField] private TMP_Text progressLabel;
 
@@ -40,6 +47,11 @@ public class HunterHud : MonoBehaviour
 		hunter.Abilities.Unlocked += OnAbilityUnlocked;
 
 		if (unlockBanner != null) unlockBanner.gameObject.SetActive(false);
+
+		// No meter on the hunter means water is not part of this build yet —
+		// showing an empty bar would read as "you are dying of thirst".
+		if (waterRoot != null) waterRoot.SetActive(hunter.Water != null);
+
 		RefreshProgress();
 	}
 
@@ -54,6 +66,8 @@ public class HunterHud : MonoBehaviour
 	private void Update()
 	{
 		if (staminaFill != null) staminaFill.fillAmount = hunter.Stamina.Normalized;
+
+		if (waterFill != null && hunter.Water != null) waterFill.fillAmount = hunter.Water.Normalized;
 
 		if (unlockBanner != null && unlockBanner.gameObject.activeSelf && Time.time >= bannerHideTime)
 			unlockBanner.gameObject.SetActive(false);
