@@ -588,6 +588,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1714802324705198060, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
+      propertyPath: m_ControlPath
+      value: <Keyboard>/2
+      objectReference: {fileID: 0}
     - target: {fileID: 1993971547964293613, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -639,6 +643,10 @@ PrefabInstance:
     - target: {fileID: 3532844652496696184, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131751855064675584, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
+      propertyPath: m_ControlPath
+      value: <Keyboard>/3
       objectReference: {fileID: 0}
     - target: {fileID: 4426743113869979156, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
       propertyPath: m_AnchorMax.y
@@ -723,6 +731,10 @@ PrefabInstance:
     - target: {fileID: 6242922064148303159, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672243652048596278, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
+      propertyPath: m_ControlPath
+      value: <Keyboard>/4
       objectReference: {fileID: 0}
     - target: {fileID: 7875893097249102786, guid: e110e67676e929b40b6d86325dc603d9, type: 3}
       propertyPath: m_AnchorMax.y
