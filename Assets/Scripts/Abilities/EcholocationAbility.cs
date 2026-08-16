@@ -29,16 +29,16 @@ public class EcholocationAbility : HunterAbility
 		if (!CanActivate()) return false;
 		if (!PayActivationCost()) return false;
 
-		Vector2 origin = transform.position;
-		float sqrRange = Definition.range * Definition.range;
+		//Vector2 origin = transform.position;
+		//float sqrRange = Definition.range * Definition.range;
 
-		foreach (var hidden in Concealment.All)
-		{
-			if (hidden == null) continue;
-			if (((Vector2)hidden.transform.position - origin).sqrMagnitude > sqrRange) continue;
+		//foreach (var hidden in Concealment.All)
+		//{
+		//	if (hidden == null) continue;
+		//	if (((Vector2)hidden.transform.position - origin).sqrMagnitude > sqrRange) continue;
 
-			hidden.Reveal(Definition.duration);
-		}
+		//	hidden.Reveal(Definition.duration);
+		//}
 
 		Pulsed?.Invoke(Definition.range);
 		return true;

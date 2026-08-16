@@ -3,6 +3,7 @@
 /// has eaten enough of them — the mapping lives in an AbilityDefinition asset,
 /// never in code, so designers can re-wire progression without a recompile.
 /// </summary>
+
 public enum Species
 {
 	Velociraptor,
