@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3056943711234326130}
   - component: {fileID: 558021897263920360}
   - component: {fileID: 5367008932767275747}
+  - component: {fileID: 6268200619110548657}
   - component: {fileID: 4311237034934996443}
   - component: {fileID: 6391747105397220311}
   - component: {fileID: 47044252948452965}
@@ -25,7 +26,8 @@ GameObject:
   - component: {fileID: 2247342833407519229}
   - component: {fileID: 6802829430500263239}
   - component: {fileID: 7367925518588972020}
-  m_Layer: 0
+  - component: {fileID: 2503875860062796779}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,8 +94,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1474869299
+  m_SortingLayer: 6
   m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6164791857662100034, guid: d565a780cbacbe845af9be6fa5aacafd, type: 3}
@@ -155,6 +157,43 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &6268200619110548657
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.42, y: 5.47}
+  m_Direction: 0
 --- !u!114 &4311237034934996443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,3 +366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db8940dce9824bc588bed4ec2b3e79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterMeter
+--- !u!114 &2503875860062796779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027281261740903777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ae272a66eb845b5992a8330ae6c1f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTracker
