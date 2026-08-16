@@ -24,6 +24,9 @@ public abstract class EnemyBrain : MonoBehaviour
 	protected Health Health { get; private set; }
 	protected Stamina Stamina { get; private set; }
 
+	/// <summary>Optional. Without one, movement falls back to steering in a straight line.</summary>
+	protected PathFollower Nav { get; private set; }
+
 	/// <summary>Home position for wandering — where this enemy was placed or spawned.</summary>
 	protected Vector2 Anchor { get; private set; }
 
@@ -50,12 +53,14 @@ public abstract class EnemyBrain : MonoBehaviour
 	protected float WalkSpeed => tuning.WalkSpeed(HunterTuning);
 	protected float RunSpeed => tuning.RunSpeed(HunterTuning);
 	protected float DashTriggerRadius => tuning.DashTriggerRadius(HunterTuning);
+	protected float FleeDistance => tuning.FleeDistance(HunterTuning);
 
 	protected virtual void Awake()
 	{
 		Body = GetComponent<Rigidbody2D>();
 		Health = GetComponent<Health>();
 		Stamina = GetComponent<Stamina>();
+		Nav = GetComponent<PathFollower>();
 		Anchor = transform.position;
 		wanderTarget = Anchor;
 
@@ -103,6 +108,39 @@ public abstract class EnemyBrain : MonoBehaviour
 	}
 
 	protected void Halt() => Body.linearVelocity = Vector2.zero;
+
+	/// <summary>
+	/// Walks towards a world point, routing around terrain when a PathFollower is
+	/// present. Returns false once there is nowhere left to go — arrived, or no
+	/// route exists — which is what the state machines use as their "done" signal.
+	/// </summary>
+	protected bool MoveTowards(Vector2 target, float speed)
+	{
+		if (Nav == null)
+		{
+			// No pathfinder: straight-line steering, fine for open ground.
+			Vector2 offset = target - Position;
+			if (offset.sqrMagnitude < 0.04f) { Halt(); return false; }
+
+			Steer(offset, speed);
+			return true;
+		}
+
+		if (!Nav.SetDestination(target, tuning.navDomain))
+		{
+			Halt();
+			return false;
+		}
+
+		Vector2 direction = Nav.Steering();
+		if (direction == Vector2.zero) { Halt(); return false; }
+
+		Steer(direction, speed);
+		return true;
+	}
+
+	/// <summary>A point roughly <paramref name="distance"/> away, directly opposite the hunter.</summary>
+	protected Vector2 RetreatPoint(float distance) => Position + DirectionAwayFromHunter * distance;
 
 	/// <summary>Sprites in this project point up, hence the -90 degree offset.</summary>
 	protected void FaceDirection(Vector2 direction)

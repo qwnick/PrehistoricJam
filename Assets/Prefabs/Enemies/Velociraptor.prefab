@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6173578841910107433}
   - component: {fileID: 3209165083582410810}
   - component: {fileID: 3617296603586705762}
+  - component: {fileID: 3074403634746891187}
   m_Layer: 9
   m_Name: Velociraptor
   m_TagString: Untagged
@@ -224,4 +225,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VelociraptorBrain
   tuning: {fileID: 11400000, guid: ecf7a19e40b5145e3a220662c54b83f4, type: 2}
   corpsePrefab: {fileID: 2247010226717165118, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
+  drawDebugGizmos: 1
+--- !u!114 &3074403634746891187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96479887920902270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f24843f06164654843e9fec2f1b319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathFollower
+  waypointArriveRadius: 0.3
+  repathInterval: 0.5
   drawDebugGizmos: 1

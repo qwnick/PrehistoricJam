@@ -1,96 +1,141 @@
 using UnityEngine;
 
 /// <summary>
-/// The first prey. Runs slightly slower than the snake but escapes with bursts of
-/// dashes, and carries only enough stamina for a few of them.
+/// A scavenger that pays for every take-off out of a small stamina pool, and
+/// refills it either slowly on the ground or quickly off a corpse.
 ///
-/// That is the whole lesson the game teaches with this enemy: you cannot catch it
-/// head-on, you have to spend its stamina first. Once the bursts stop, your base
-/// speed is enough. Nothing here enforces that — it falls out of runSpeedFactor
-/// being just under 1 and maxStamina being small.
+/// That is the hook the player exploits: kill something, leave the body, and the
+/// Vulturesaur will eventually have to commit to eating it. Chase it until it is
+/// low, then take it while it is head-down on the carcass. It is the only prey
+/// whose weakness the player creates rather than waits for.
 /// </summary>
 public class VulturesaurBrain : EnemyBrain
 {
-	private bool isFleeing;
+	private enum State
+	{
+		Idle,
+		Flying,
+		Eating
+	}
 
-	private Vector2 dashDirection;
-	private float dashEndTime;
-	private float dashReadyTime;
+	private State state = State.Idle;
+	private Vector2 flightTarget;
+	private Corpse targetCorpse;
+	private float eatEndTime;
 
-	private bool IsDashing => Time.time < dashEndTime;
+	private bool StaminaLow => Stamina != null && Stamina.Normalized <= tuning.lowStaminaThreshold;
 
 	protected override void Think()
 	{
-		if (!HasHunter)
+		switch (state)
 		{
-			Wander();
+			case State.Idle: Idle_Think(); break;
+			case State.Flying: Flying_Think(); break;
+			case State.Eating: Eating_Think(); break;
+		}
+	}
+
+	private void Idle_Think()
+	{
+		if (HasHunter && DistanceToHunter <= FleeRadius)
+		{
+			TakeOff();
 			return;
 		}
 
-		// A dash is committed: it runs to completion regardless of what the snake does.
-		if (IsDashing)
+		// Undisturbed and hungry: walk over to the nearest body and feed.
+		if (StaminaLow && TryFindCorpse(out var corpse))
 		{
-			Body.linearVelocity = dashDirection * tuning.DashSpeed;
-			FaceDirection(dashDirection);
-			return;
-		}
+			targetCorpse = corpse;
 
-		float distance = DistanceToHunter;
-
-		if (!isFleeing)
-		{
-			if (distance <= FleeRadius) isFleeing = true;
-			else
+			if (Vector2.Distance(Position, corpse.transform.position) <= tuning.nearWaterDistance)
 			{
-				Wander();
+				BeginEating();
 				return;
 			}
-		}
 
-		// Hysteresis: it only calms down well outside the radius that spooked it,
-		// otherwise it stutters between wandering and fleeing on the boundary.
-		if (distance >= CalmRadius)
-		{
-			isFleeing = false;
-			Wander();
+			MoveTowards(corpse.transform.position, WalkSpeed);
 			return;
 		}
 
-		if (CanDash(distance))
+		Wander();
+	}
+
+	private void TakeOff()
+	{
+		// Too tired to fly is not an option — it just runs instead.
+		if (Stamina != null && !Stamina.TryConsume(tuning.flightStaminaCost))
 		{
-			StartDash();
+			MoveTowards(RetreatPoint(FleeDistance), WalkSpeed);
 			return;
 		}
 
-		Steer(DirectionAwayFromHunter, RunSpeed);
+		// Low on fuel it heads for a meal; otherwise it just puts distance between
+		// itself and the snake.
+		if (StaminaLow && TryFindCorpse(out var corpse))
+		{
+			targetCorpse = corpse;
+			flightTarget = corpse.transform.position;
+		}
+		else
+		{
+			targetCorpse = null;
+			flightTarget = RetreatPoint(FleeDistance);
+		}
+
+		state = State.Flying;
+		Nav?.SetDestination(flightTarget, tuning.navDomain, force: true);
 	}
 
-	private bool CanDash(float distance)
+	private void Flying_Think()
 	{
-		if (!tuning.canDash) return false;
-		if (Time.time < dashReadyTime) return false;
-		if (distance > DashTriggerRadius) return false;
+		if (MoveTowards(flightTarget, RunSpeed)) return;
 
-		// Out of stamina means no more bursts — this is the opening the player hunts for.
-		return Stamina != null && Stamina.CanAfford(tuning.dashStaminaCost);
+		if (targetCorpse != null)
+		{
+			BeginEating();
+			return;
+		}
+
+		state = State.Idle;
 	}
 
-	private void StartDash()
+	private void BeginEating()
 	{
-		if (!Stamina.TryConsume(tuning.dashStaminaCost)) return;
-
-		dashDirection = DirectionAwayFromHunter;
-		dashEndTime = Time.time + tuning.dashDuration;
-		dashReadyTime = dashEndTime + tuning.dashCooldown;
+		state = State.Eating;
+		eatEndTime = Time.time + tuning.corpseEatSeconds;
 	}
 
-	protected override void OnDrawGizmosSelected()
+	private void Eating_Think()
 	{
-		base.OnDrawGizmosSelected();
+		// Someone else got there first, or it rotted away.
+		if (targetCorpse == null)
+		{
+			state = State.Idle;
+			return;
+		}
 
-		if (tuning == null || !tuning.canDash || !Application.isPlaying || !HasHunter) return;
+		Halt();
 
-		Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.9f);
-		Gizmos.DrawWireSphere(transform.position, DashTriggerRadius);
+		// Head down and committed. Interrupting it costs the meal but not the
+		// stamina it has already gained — this is the player's window.
+		if (HasHunter && DistanceToHunter <= FleeRadius)
+		{
+			TakeOff();
+			return;
+		}
+
+		if (Time.time < eatEndTime) return;
+
+		Stamina?.RefillFully();
+		targetCorpse.Consume();
+		targetCorpse = null;
+		state = State.Idle;
+	}
+
+	private bool TryFindCorpse(out Corpse corpse)
+	{
+		corpse = Corpse.FindNearest(Position, FleeDistance);
+		return corpse != null;
 	}
 }

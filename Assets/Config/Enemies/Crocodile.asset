@@ -29,6 +29,15 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 1
   dashStaminaCost: 1
+  navDomain: 2
+  fleeDistanceInDashes: 4
+  staminaDrainPerSecond: 1
+  flightStaminaCost: 1
+  shoreRestSeconds: 2
+  drinkSeconds: 6
+  nearWaterDistance: 2
+  lowStaminaThreshold: 0.5
+  corpseEatSeconds: 6
   wanderRadius: 4
   wanderPauseMin: 1
   wanderPauseMax: 3

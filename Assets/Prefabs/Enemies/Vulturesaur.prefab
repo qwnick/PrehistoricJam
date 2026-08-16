@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 281702795693781876}
   - component: {fileID: 1472888314677069239}
   - component: {fileID: 1800508247975455177}
+  - component: {fileID: 7113277238064809349}
   m_Layer: 9
   m_Name: Vulturesaur
   m_TagString: Untagged
@@ -239,4 +240,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VulturesaurBrain
   tuning: {fileID: 11400000, guid: 479c4f726da4341248f8a1f972d29cb5, type: 2}
   corpsePrefab: {fileID: 695866802874150478, guid: a6e25c201804c471a841de5c7417ed64, type: 3}
+  drawDebugGizmos: 1
+--- !u!114 &7113277238064809349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460396841439404725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f24843f06164654843e9fec2f1b319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathFollower
+  waypointArriveRadius: 0.3
+  repathInterval: 0.5
   drawDebugGizmos: 1

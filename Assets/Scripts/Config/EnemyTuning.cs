@@ -51,6 +51,36 @@ public class EnemyTuning : ScriptableObject
 	public float dashCooldown = 1f;
 	public float dashStaminaCost = 1f;
 
+	[Header("Navigation")]
+	[Tooltip("What terrain this species can cross. Drives A* and nothing else.")]
+	public NavDomain navDomain = NavDomain.Land;
+
+	[Tooltip("How far it relocates when it bolts, in hunter dash distances. Pterosaur crosses the whole forest.")]
+	public float fleeDistanceInDashes = 6f;
+
+	[Header("Species-specific costs")]
+	[Tooltip("Crocodile: drained while swimming. Camelsaur: drained while away from water.")]
+	public float staminaDrainPerSecond = 1f;
+
+	[Tooltip("Vulturesaur / Pterosaur: stamina spent to take off once.")]
+	public float flightStaminaCost = 1f;
+
+	[Header("Species-specific timings")]
+	[Tooltip("Crocodile: minimum seconds resting on the shore before diving again.")]
+	public float shoreRestSeconds = 2f;
+
+	[Tooltip("Camelsaur: seconds spent drinking once it reaches water. Long — this is the opening the player uses.")]
+	public float drinkSeconds = 6f;
+
+	[Tooltip("Camelsaur: how close to water counts as being at the water.")]
+	public float nearWaterDistance = 2f;
+
+	[Tooltip("Vulturesaur: below this fraction of stamina it will run for a corpse instead of just fleeing.")]
+	[Range(0f, 1f)] public float lowStaminaThreshold = 0.5f;
+
+	[Tooltip("Vulturesaur: seconds of eating a corpse to refill stamina completely.")]
+	public float corpseEatSeconds = 6f;
+
 	[Header("Wandering")]
 	public float wanderRadius = 4f;
 	public float wanderPauseMin = 1f;
@@ -69,6 +99,7 @@ public class EnemyTuning : ScriptableObject
 	public float FleeRadius(PlayerTuning player) => player.dashDistance * fleeRadiusInDashes;
 	public float CalmRadius(PlayerTuning player) => player.dashDistance * calmRadiusInDashes;
 	public float DashTriggerRadius(PlayerTuning player) => player.dashDistance * dashTriggerRadiusInDashes;
+	public float FleeDistance(PlayerTuning player) => player.dashDistance * fleeDistanceInDashes;
 
 	public float DashSpeed => dashDistance / Mathf.Max(dashDuration, 0.01f);
 

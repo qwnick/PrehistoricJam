@@ -16,14 +16,19 @@ MonoBehaviour:
   input: {fileID: 11400000, guid: 37348f7b6486d4a33907dc9aeb350ee8, type: 2}
   abilities:
   - {fileID: 11400000, guid: 6c7484a0527fe454a82971a2892a8656, type: 2}
-  - {fileID: 11400000, guid: 6f205f19843e54d46b6602ff90949c2f, type: 2}
+  - {fileID: 11400000, guid: fc70e14944d754208b4dbd332ed2e61d, type: 2}
   - {fileID: 11400000, guid: cf96fa1f6bd50429a8f4ef65a31f54e5, type: 2}
-  - {fileID: 11400000, guid: 29247ce39e43c4a458d072361b6b0b7a, type: 2}
-  - {fileID: 11400000, guid: 974721760118d454988bbd8438612129, type: 2}
+  - {fileID: 11400000, guid: a70c937d0094a4445b1fd1121600ddc8, type: 2}
+  - {fileID: 11400000, guid: aa405ebcbc0c04345a6c97d4366022d1, type: 2}
   startingAbilities: 0000000001000000
   enemies:
   - {fileID: 11400000, guid: ecf7a19e40b5145e3a220662c54b83f4, type: 2}
-  - {fileID: 11400000, guid: 479c4f726da4341248f8a1f972d29cb5, type: 2}
+  - {fileID: 11400000, guid: f749e9a9c01324bd69ca66f022ba9dc7, type: 2}
   - {fileID: 11400000, guid: bc164d3450c86442f896729a1f0dafdf, type: 2}
   - {fileID: 11400000, guid: 5ab50a875d4f3439496f3e38507c2fbc, type: 2}
-  - {fileID: 11400000, guid: f749e9a9c01324bd69ca66f022ba9dc7, type: 2}
+  - {fileID: 11400000, guid: 479c4f726da4341248f8a1f972d29cb5, type: 2}
+  zones:
+  - {fileID: 11400000, guid: 6049bee1ca2224d38b3e73eb1b251208, type: 2}
+  - {fileID: 11400000, guid: 5193ee6d490c343d19dceaa0bad1a069, type: 2}
+  - {fileID: 11400000, guid: 416a7f4147b524331b477600d9c36433, type: 2}
+  - {fileID: 11400000, guid: 592052e3424494397b505d0dd2f4ef5b, type: 2}

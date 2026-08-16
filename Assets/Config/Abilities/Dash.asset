@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
   id: 0
   displayName: Dash
-  description: 
+  description: A burst of speed. The only way to close on prey that outruns you.
   icon: {fileID: 0}
   isPassive: 0
   unlockedBy: 0
   killsRequired: 3
-  staminaCost: 0
+  staminaCost: 30
   staminaDrainPerSecond: 0
-  cooldown: 0
+  cooldown: 0.4
+  range: 0
+  duration: 0

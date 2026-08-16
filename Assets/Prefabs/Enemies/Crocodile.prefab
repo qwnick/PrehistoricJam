@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 1166570246219529530}
   - component: {fileID: 7436832628155732910}
   - component: {fileID: 1118603026564908836}
+  - component: {fileID: 1125384474411503325}
+  - component: {fileID: 4162378650578289370}
   m_Layer: 9
   m_Name: Crocodile
   m_TagString: Untagged
@@ -240,3 +242,32 @@ MonoBehaviour:
   tuning: {fileID: 11400000, guid: bc164d3450c86442f896729a1f0dafdf, type: 2}
   corpsePrefab: {fileID: 5006395492188818255, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
   drawDebugGizmos: 1
+--- !u!114 &1125384474411503325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162417410472337344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f24843f06164654843e9fec2f1b319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PathFollower
+  waypointArriveRadius: 0.3
+  repathInterval: 0.5
+  drawDebugGizmos: 1
+--- !u!114 &4162378650578289370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162417410472337344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659e3b23783434812b9c5a8c1adf654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Concealment
+  renderers:
+  - {fileID: 5323248171004010533}
