@@ -19,6 +19,7 @@ public class HunterMovement : MonoBehaviour
 	private Rigidbody2D body;
 
 	private Vector2 dashDirection;
+	private float dashRotation;
 	private float dashSpeed;
 	private float dashEndTime;
 
@@ -30,8 +31,22 @@ public class HunterMovement : MonoBehaviour
 	/// <summary>Set while a sustained ability is running on an empty stamina bar.</summary>
 	public bool IsExhausted { get; set; }
 
-	/// <summary>The body's facing. Sprites in this project point up.</summary>
-	public Vector2 Facing => transform.up;
+	/// <summary>
+	/// The body's facing. Sprites in this project point up.
+	///
+	/// Read off the Rigidbody rather than the transform: interpolation is on, so
+	/// transform.up outside FixedUpdate is the smoothed *visual* rotation, which
+	/// trails the physics rotation by up to a step. A dash launched from that stale
+	/// value flies off-axis from the body — which is what made it look bent.
+	/// </summary>
+	public Vector2 Facing
+	{
+		get
+		{
+			float radians = body.rotation * Mathf.Deg2Rad;
+			return new Vector2(-Mathf.Sin(radians), Mathf.Cos(radians));
+		}
+	}
 
 	private PlayerTuning Tuning => hunter.Tuning;
 
@@ -45,10 +60,18 @@ public class HunterMovement : MonoBehaviour
 	{
 		if (hunter.Input == null) return;
 
+		// The heading is input-owned, never physics-owned. Clipping prey or scenery
+		// hands the body an angular velocity that only decays (damping is 0.05), and
+		// mid-dash there is no MoveRotation call to overwrite it — that leftover spin
+		// is what made the snake keep turning after the burst.
+		body.angularVelocity = 0f;
+
 		// A dash owns the body outright — no steering mid-dash. With tank controls
-		// that is the point: you commit to a heading before you launch.
+		// that is the point: you commit to a heading before you launch. The rotation
+		// is re-asserted every step so a glancing hit cannot bend the burst.
 		if (IsDashing)
 		{
+			body.MoveRotation(dashRotation);
 			body.linearVelocity = dashDirection * dashSpeed;
 			return;
 		}
@@ -80,14 +103,19 @@ public class HunterMovement : MonoBehaviour
 		}
 	}
 
-	/// <summary>Called by DashAbility once it has paid the cost.</summary>
-	public void BeginDash(Vector2 direction, float speed, float duration)
+	/// <summary>
+	/// Called by DashAbility once it has paid the cost. The heading comes from the
+	/// body itself rather than from the caller, so the burst can never fly at an
+	/// angle to the sprite.
+	/// </summary>
+	public void BeginDash(float speed, float duration)
 	{
-		if (direction.sqrMagnitude < 0.0001f) return;
-
-		dashDirection = direction.normalized;
+		dashDirection = Facing;
+		dashRotation = body.rotation;
 		dashSpeed = speed;
 		dashEndTime = Time.time + duration;
+
+		body.angularVelocity = 0f;
 	}
 
 	private void OnDrawGizmosSelected()
