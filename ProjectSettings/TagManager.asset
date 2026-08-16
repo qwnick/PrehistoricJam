@@ -44,5 +44,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Grond
+    uniqueID: 1698592071
+    locked: 0
+  - name: Grass
+    uniqueID: 530699121
+    locked: 0
+  - name: Rocks
+    uniqueID: 2887960057
+    locked: 0
+  - name: Tree
+    uniqueID: 3215319729
+    locked: 0
   m_RenderingLayers:
   - Default
