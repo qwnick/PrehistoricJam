@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2
   displayName: Swim
   description: Cross the river and hunt from the water.
-  icon: {fileID: 0}
+  icon: {fileID: 7336464509718241649, guid: aae7923ae8e4b254fa0f17250b4ce66d, type: 3}
   isPassive: 0
   unlockedBy: 2
   killsRequired: 3

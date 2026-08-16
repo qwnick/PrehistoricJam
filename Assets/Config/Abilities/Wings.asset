@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 4
   displayName: Wings
   description: Reach the rocks.
-  icon: {fileID: 0}
+  icon: {fileID: -8449399843987483666, guid: 9eb93be889d7f6d47b976112028253f9, type: 3}
   isPassive: 0
   unlockedBy: 4
   killsRequired: 3

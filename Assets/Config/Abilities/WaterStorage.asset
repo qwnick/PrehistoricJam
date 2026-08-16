@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
   id: 3
   displayName: Water Storage
-  description: 
-  icon: {fileID: 0}
+  description: "A second stomach for water. It does not refill any faster, it simply
+    holds far more \u2014 which is the whole difference between crossing the desert
+    and dying in it."
+  icon: {fileID: 3139798368680378336, guid: 87c94cb8e178afb428bb7eeb4cd6ff3c, type: 3}
   isPassive: 1
   unlockedBy: 3
   killsRequired: 3

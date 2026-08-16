@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
   id: 1
   displayName: Echolocation
-  description: 
-  icon: {fileID: 0}
+  description: A pulse that forces every hidden creature in range to show itself
+    for a few seconds. The crocodile is invisible while submerged, so the river hunt
+    is impossible without it.
+  icon: {fileID: 555706738829966454, guid: 86034282e8f5fe04185bb633782c1f08, type: 3}
   isPassive: 0
   unlockedBy: 1
   killsRequired: 3
