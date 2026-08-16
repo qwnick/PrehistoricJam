@@ -15,11 +15,11 @@ MonoBehaviour:
   species: 1
   displayName: Pterosaur
   health: 2
-  walkSpeedFactor: 0.35
-  runSpeedFactor: 0.9
-  fleeRadiusInDashes: 1
-  calmRadiusInDashes: 1.6
-  usesStamina: 1
+  walkSpeedFactor: 0.15
+  runSpeedFactor: 2
+  fleeRadiusInDashes: 0.85
+  calmRadiusInDashes: 1.5
+  usesStamina: 0
   maxStamina: 3
   staminaRegenPerSecond: 1
   staminaRegenDelay: 1.5
@@ -38,7 +38,7 @@ MonoBehaviour:
   nearWaterDistance: 2
   lowStaminaThreshold: 0.5
   corpseEatSeconds: 6
-  wanderRadius: 4
+  wanderRadius: 2
   wanderPauseMin: 1
   wanderPauseMax: 3
   corpseLifetime: 60

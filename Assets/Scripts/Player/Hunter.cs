@@ -27,6 +27,7 @@ public class Hunter : MonoBehaviour
 	public AbilityInventory Abilities { get; private set; }
 	public KillTracker Kills { get; private set; }
 	public HunterMovement Movement { get; private set; }
+	public HunterCombat Combat { get; private set; }
 
 	/// <summary>Optional until the desert exists — null is a valid state.</summary>
 	public WaterMeter Water { get; private set; }
@@ -48,6 +49,7 @@ public class Hunter : MonoBehaviour
 		Abilities = GetComponent<AbilityInventory>();
 		Kills = GetComponent<KillTracker>();
 		Movement = GetComponent<HunterMovement>();
+		Combat = GetComponent<HunterCombat>();
 		Water = GetComponent<WaterMeter>();
 
 		Stamina.Configure(Tuning.maxStamina, Tuning.staminaRegenPerSecond, Tuning.staminaRegenDelay);

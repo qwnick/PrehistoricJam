@@ -29,6 +29,9 @@ public class HunterCombat : MonoBehaviour
 
 	public bool AttackReady => Time.time >= attackReadyTime;
 
+	/// <summary>Seconds until the next bite is allowed. Zero when ready — the HUD reads this.</summary>
+	public float AttackCooldownRemaining => Mathf.Max(0f, attackReadyTime - Time.time);
+
 	private void Awake()
 	{
 		hunter = GetComponent<Hunter>();

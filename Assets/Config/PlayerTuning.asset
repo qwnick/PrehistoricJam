@@ -30,6 +30,6 @@ MonoBehaviour:
   swimSpeedFactor: 1
   flySpeedFactor: 1.3
   maxWater: 100
-  desertWaterDrainPerSecond: 2
   waterRefillPerSecond: 25
   waterStorageMultiplier: 3
+  exhaustedSpeedFactor: 0.4

@@ -27,10 +27,10 @@ MonoBehaviour:
   attack:
   - <Keyboard>/1
   dash:
-  - <Keyboard>/2
-  opponentSearch:
   - <Keyboard>/3
-  eat:
+  opponentSearch:
   - <Keyboard>/4
+  eat:
+  - <Keyboard>/2
   toggleFly:
   - <Keyboard>/5

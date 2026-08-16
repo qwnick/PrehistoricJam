@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTuning
   species: 2
   displayName: Crocodile
-  health: 2
-  walkSpeedFactor: 0.35
-  runSpeedFactor: 0.9
-  fleeRadiusInDashes: 1
-  calmRadiusInDashes: 1.6
+  health: 3
+  walkSpeedFactor: 0.3
+  runSpeedFactor: 1
+  fleeRadiusInDashes: 2
+  calmRadiusInDashes: 3
   usesStamina: 1
-  maxStamina: 3
-  staminaRegenPerSecond: 1
-  staminaRegenDelay: 1.5
+  maxStamina: 6
+  staminaRegenPerSecond: 3
+  staminaRegenDelay: 0.5
   canDash: 0
   dashTriggerRadiusInDashes: 0.5
   dashDistance: 3
@@ -38,7 +38,7 @@ MonoBehaviour:
   nearWaterDistance: 2
   lowStaminaThreshold: 0.5
   corpseEatSeconds: 6
-  wanderRadius: 4
+  wanderRadius: 3
   wanderPauseMin: 1
   wanderPauseMax: 3
   corpseLifetime: 60

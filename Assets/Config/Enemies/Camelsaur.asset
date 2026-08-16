@@ -14,23 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTuning
   species: 3
   displayName: Camelsaur
-  health: 2
-  walkSpeedFactor: 0.35
-  runSpeedFactor: 0.9
-  fleeRadiusInDashes: 1
-  calmRadiusInDashes: 1.6
+  health: 3
+  walkSpeedFactor: 0.3
+  runSpeedFactor: 1.3
+  fleeRadiusInDashes: 6
+  calmRadiusInDashes: 7
   usesStamina: 1
-  maxStamina: 3
+  maxStamina: 8
   staminaRegenPerSecond: 1
-  staminaRegenDelay: 1.5
+  staminaRegenDelay: 2
   canDash: 0
   dashTriggerRadiusInDashes: 0.5
   dashDistance: 3
   dashDuration: 0.2
   dashCooldown: 1
   dashStaminaCost: 1
-  wanderRadius: 4
+  wanderRadius: 5
   wanderPauseMin: 1
   wanderPauseMax: 3
   corpseLifetime: 60
   corpseNutrition: 1
+  navDomain: 0
+  fleeDistanceInDashes: 8
+  staminaDrainPerSecond: 0.5
+  drinkSeconds: 6
+  nearWaterDistance: 2

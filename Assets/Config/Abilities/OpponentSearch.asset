@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6744507de2c5c4d74b843a0fb72e2ad6, type: 3}
   m_Name: OpponentSearch
   m_EditorClassIdentifier: Assembly-CSharp::AbilityDefinition
-  id: 0
-  displayName: 
-  description: 
-  icon: {fileID: 0}
+  id: 1
+  displayName: Echolocation
+  description: A pulse that forces every hidden creature in range to show itself
+    for a few seconds. The crocodile is invisible while submerged, so the river hunt
+    is impossible without it.
+  icon: {fileID: 555706738829966454, guid: 86034282e8f5fe04185bb633782c1f08, type: 3}
   isPassive: 0
-  unlockedBy: 4
+  unlockedBy: 1
   killsRequired: 3
-  staminaCost: 0
+  staminaCost: 25
   staminaDrainPerSecond: 0
-  cooldown: 0
-  range: 0
-  duration: 0
+  cooldown: 60
+  range: 12
+  duration: 5

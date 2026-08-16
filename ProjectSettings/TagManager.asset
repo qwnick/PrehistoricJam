@@ -53,14 +53,14 @@ TagManager:
   - name: Grass
     uniqueID: 530699121
     locked: 0
+  - name: Player
+    uniqueID: 2820097997
+    locked: 0
   - name: Rocks
     uniqueID: 2887960057
     locked: 0
   - name: Tree
     uniqueID: 3215319729
-    locked: 0
-  - name: Player
-    uniqueID: 2820097997
     locked: 0
   m_RenderingLayers:
   - Default

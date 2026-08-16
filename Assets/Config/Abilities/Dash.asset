@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 0
   displayName: Dash
   description: A burst of speed. The only way to close on prey that outruns you.
-  icon: {fileID: 0}
+  icon: {fileID: 1730826577450134818, guid: 3a7ace9cdbc56ae4fa3b293c18bf4afc, type: 3}
   isPassive: 0
   unlockedBy: 0
   killsRequired: 3

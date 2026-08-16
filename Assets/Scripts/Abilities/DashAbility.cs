@@ -37,8 +37,9 @@ public class DashAbility : HunterAbility
 		var tuning = Owner.Tuning;
 
 		// Direction is locked in at launch: with tank controls, committing to a
-		// heading before you fire is the whole skill of the ability.
-		movement.BeginDash(movement.Facing, tuning.DashSpeed, tuning.dashDuration);
+		// heading before you fire is the whole skill of the ability. HunterMovement
+		// reads that heading off the body so it matches the physics rotation exactly.
+		movement.BeginDash(tuning.DashSpeed, tuning.dashDuration);
 		return true;
 	}
 }
