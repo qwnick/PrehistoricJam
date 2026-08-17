@@ -19,7 +19,7 @@ MonoBehaviour:
     is impossible without it.
   icon: {fileID: 555706738829966454, guid: 86034282e8f5fe04185bb633782c1f08, type: 3}
   isPassive: 0
-  unlockedBy: 1
+  unlockedBy: 4
   killsRequired: 3
   staminaCost: 25
   staminaDrainPerSecond: 0
