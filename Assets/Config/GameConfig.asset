@@ -20,7 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf96fa1f6bd50429a8f4ef65a31f54e5, type: 2}
   - {fileID: 11400000, guid: a70c937d0094a4445b1fd1121600ddc8, type: 2}
   - {fileID: 11400000, guid: aa405ebcbc0c04345a6c97d4366022d1, type: 2}
-  startingAbilities: 0000000001000000
+  startingAbilities: 
   enemies:
   - {fileID: 11400000, guid: ecf7a19e40b5145e3a220662c54b83f4, type: 2}
   - {fileID: 11400000, guid: f749e9a9c01324bd69ca66f022ba9dc7, type: 2}
