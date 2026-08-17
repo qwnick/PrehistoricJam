@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4618058700192805136, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 4618058700192805136, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4618058700192805136, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 4618058700192805136, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -50,11 +50,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4618058700192805136, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4631129961622860045, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
       propertyPath: m_Name
-      value: corpse (2) Variant
+      value: Pterosaur-corpse
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017562948501749397, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6086961864018933506, guid: 2cf1c27deee5f4b28926af87ab3ba8c9, type: 3}
+    - target: {fileID: 5017562948501749397, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017562948501749397, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.17609818
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017562948501749397, guid: 0cd5d6973b2884f139038ceddf8a45a6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

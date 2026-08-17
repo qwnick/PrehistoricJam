@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1878464903096794236, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_Name
-      value: corpse (4) Variant
+      value: Camelsaur-corpse
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalRotation.x
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -50,7 +50,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1892094731488951393, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302825001876075492, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7898026220733447401, guid: 15c7e6e052adf43389c4ef7d33fe3b8a, type: 3}
+    - target: {fileID: 2302825001876075492, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
+      propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302825001876075492, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302825001876075492, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5006395492188818255, guid: 0e9c42b15817141d3af9b7820300dfbe, type: 3}
       propertyPath: species

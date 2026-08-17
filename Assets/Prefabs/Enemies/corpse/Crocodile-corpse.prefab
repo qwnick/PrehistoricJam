@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 85959856508376767, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92387956
       objectReference: {fileID: 0}
     - target: {fileID: 85959856508376767, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_LocalRotation.x
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 85959856508376767, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.38268343
       objectReference: {fileID: 0}
     - target: {fileID: 85959856508376767, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -46,11 +46,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 85959856508376767, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 99875010318309026, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: m_Name
-      value: corpse (3) Variant
+      value: Crocodile-corpse
+      objectReference: {fileID: 0}
+    - target: {fileID: 326001942039845178, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3481545309976959639, guid: 3cb69f207cee84db6b506fae4fc031d8, type: 3}
+    - target: {fileID: 326001942039845178, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 326001942039845178, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
+      propertyPath: m_Color.g
+      value: 0.2506302
+      objectReference: {fileID: 0}
+    - target: {fileID: 326001942039845178, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6776013111945159057, guid: b626723838e8e4f449e0f9d8140c17ab, type: 3}
       propertyPath: species
