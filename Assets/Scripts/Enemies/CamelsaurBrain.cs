@@ -11,6 +11,16 @@ using UnityEngine;
 /// </summary>
 public class CamelsaurBrain : EnemyBrain
 {
+	// Water does not move, and the nearest-water search is by far the most
+	// expensive thing this brain does. Re-running it every physics step was
+	// burning real CPU for an answer that barely changes.
+	private const float WaterSearchInterval = 1.5f;
+
+	// After failing to find water, roam for a while before trying again. Without
+	// this, an exhausted camelsaur out of range flips between Roaming and
+	// SeekingWater on every single frame, paying for a full search each time.
+	private const float GiveUpSeconds = 5f;
+
 	private enum State
 	{
 		Roaming,
@@ -20,8 +30,15 @@ public class CamelsaurBrain : EnemyBrain
 	}
 
 	private State state = State.Roaming;
+
 	private Vector2 waterTarget;
+	private bool hasWaterTarget;
 	private float drinkEndTime;
+	private float retryWaterTime;
+
+	private Vector2 cachedWater;
+	private bool cachedWaterValid;
+	private float cacheExpiryTime;
 
 	protected override void Think()
 	{
@@ -38,16 +55,29 @@ public class CamelsaurBrain : EnemyBrain
 		}
 	}
 
+	// ---- Roaming ----
+
 	private void Roaming_Think()
 	{
-		if (DrainAwayFromWater()) return;
+		DrainStamina();
+
+		// "When stamina is exhausted, if it doesn't see the snake, it goes to
+		// drink" — so this transition belongs here and not while fleeing.
+		if (Stamina != null && Stamina.IsEmpty && Time.time >= retryWaterTime)
+		{
+			hasWaterTarget = false;
+			state = State.SeekingWater;
+			return;
+		}
 
 		Wander();
 	}
 
+	// ---- Fleeing ----
+
 	private void Fleeing_Think()
 	{
-		DrainAwayFromWater();
+		DrainStamina();
 
 		if (!HasHunter || DistanceToHunter >= CalmRadius)
 		{
@@ -59,66 +89,110 @@ public class CamelsaurBrain : EnemyBrain
 			Steer(DirectionAwayFromHunter, RunSpeed);
 	}
 
+	// ---- Seeking water ----
+
 	private void SeekingWater_Think()
 	{
-		if (!TryFindWater(out waterTarget))
+		if (!hasWaterTarget)
 		{
-			// Nothing to drink anywhere — carry on and hope.
-			state = State.Roaming;
-			return;
+			if (!TryFindWater(out waterTarget))
+			{
+				GiveUpOnWater();
+				return;
+			}
+
+			hasWaterTarget = true;
 		}
 
 		if (Vector2.Distance(Position, waterTarget) <= tuning.nearWaterDistance)
 		{
-			state = State.Drinking;
-			drinkEndTime = Time.time + tuning.drinkSeconds;
+			BeginDrinking();
 			return;
 		}
 
-		// Arrived is handled by the proximity check above, so anything that is not
-		// still moving means the water is unreachable — give up and roam.
-		if (MoveTowards(waterTarget, WalkSpeed) != MoveResult.Moving) state = State.Roaming;
+		switch (MoveTowards(waterTarget, WalkSpeed))
+		{
+			case MoveResult.Moving:
+				return;
+
+			// The target is a WATER cell but the camelsaur walks on land, so A*
+			// routes it to the bank beside it. Arriving there is arriving at the
+			// water — treating it as a failure is why it never drank.
+			case MoveResult.Arrived:
+				BeginDrinking();
+				return;
+
+			case MoveResult.NoRoute:
+				GiveUpOnWater();
+				return;
+		}
+	}
+
+	private void GiveUpOnWater()
+	{
+		hasWaterTarget = false;
+		retryWaterTime = Time.time + GiveUpSeconds;
+		state = State.Roaming;
+	}
+
+	// ---- Drinking ----
+
+	private void BeginDrinking()
+	{
+		state = State.Drinking;
+		drinkEndTime = Time.time + tuning.drinkSeconds;
+		Halt();
 	}
 
 	private void Drinking_Think()
 	{
 		Halt();
 
-		// Stamina refills on its own while nothing is draining it.
 		if (Time.time < drinkEndTime) return;
 
 		Stamina?.RefillFully();
+		hasWaterTarget = false;
 		state = State.Roaming;
 	}
 
-	/// <summary>
-	/// Bleeds stamina while away from water. Returns true once it has run out and
-	/// switched to looking for a drink.
-	/// </summary>
-	private bool DrainAwayFromWater()
+	// ---- Water and stamina ----
+
+	/// <summary>Bleeds stamina while away from water. Never changes state.</summary>
+	private void DrainStamina()
 	{
-		if (Stamina == null) return false;
+		if (Stamina == null) return;
+		if (IsNearWater()) return;
 
-		bool nearWater = TryFindWater(out var water)
-		                 && Vector2.Distance(Position, water) <= tuning.nearWaterDistance;
-
-		if (nearWater) return false;
-
-		if (Stamina.Drain(tuning.staminaDrainPerSecond)) return false;
-
-		state = State.SeekingWater;
-		return true;
+		Stamina.Drain(tuning.staminaDrainPerSecond);
 	}
 
+	private bool IsNearWater()
+		=> TryFindWater(out var water) && Vector2.Distance(Position, water) <= tuning.nearWaterDistance;
+
+	/// <summary>Nearest water, cached — see <see cref="WaterSearchInterval"/>.</summary>
 	private bool TryFindWater(out Vector2 world)
 	{
-		world = Position;
+		if (Time.time < cacheExpiryTime)
+		{
+			world = cachedWater;
+			return cachedWaterValid;
+		}
+
+		cacheExpiryTime = Time.time + WaterSearchInterval;
+		cachedWater = Position;
+		cachedWaterValid = false;
 
 		var grid = NavGrid.Instance;
-		if (grid == null) return false;
-		if (!grid.TryFindNearestPassable(Position, NavDomain.Water, out var cell, maxRadius: 40)) return false;
 
-		world = grid.CellToWorld(cell);
-		return true;
+		// HasWater short-circuits the whole search on maps with no river at all.
+		if (grid != null && grid.IsBuilt && grid.HasWater
+		    && grid.TryFindNearestPassable(Position, NavDomain.Water, out var cell, maxRadius: 40))
+		{
+			cachedWater = grid.CellToWorld(cell);
+			cachedWaterValid = true;
+		}
+
+		world = cachedWater;
+		return cachedWaterValid;
 	}
 }

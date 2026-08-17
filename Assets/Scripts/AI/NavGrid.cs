@@ -180,21 +180,29 @@ public class NavGrid : MonoBehaviour
 
 		if (IsPassable(origin, domain)) return true;
 
+		// Walks the ring itself rather than filtering a filled square. The square
+		// version was O(radius^3) — about 64k iterations at radius 40 — and every
+		// caller that misses paid it in full, every frame.
 		for (int radius = 1; radius <= maxRadius; radius++)
 		{
+			// Top and bottom edges, corners included.
 			for (int dx = -radius; dx <= radius; dx++)
 			{
-				for (int dy = -radius; dy <= radius; dy++)
-				{
-					// Only the ring at this radius, not the filled square.
-					if (Mathf.Abs(dx) != radius && Mathf.Abs(dy) != radius) continue;
+				var bottom = new Vector3Int(origin.x + dx, origin.y - radius, origin.z);
+				if (IsPassable(bottom, domain)) { result = bottom; return true; }
 
-					var candidate = new Vector3Int(origin.x + dx, origin.y + dy, origin.z);
-					if (!IsPassable(candidate, domain)) continue;
+				var top = new Vector3Int(origin.x + dx, origin.y + radius, origin.z);
+				if (IsPassable(top, domain)) { result = top; return true; }
+			}
 
-					result = candidate;
-					return true;
-				}
+			// Left and right edges, corners already covered above.
+			for (int dy = -radius + 1; dy <= radius - 1; dy++)
+			{
+				var left = new Vector3Int(origin.x - radius, origin.y + dy, origin.z);
+				if (IsPassable(left, domain)) { result = left; return true; }
+
+				var right = new Vector3Int(origin.x + radius, origin.y + dy, origin.z);
+				if (IsPassable(right, domain)) { result = right; return true; }
 			}
 		}
 

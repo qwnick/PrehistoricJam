@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 /// <summary>
@@ -84,7 +85,7 @@ public class HunterCombat : MonoBehaviour
 
 			health.TakeDamage(Tuning.attackDamage);
 		}
-
+		hunter.PlayAttack();
 		return true;
 	}
 

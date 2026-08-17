@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ZoneTuning
   type: 3
   displayName: Rocks
-  waterDrainPerSecond: 0
+  waterDrainPerSecond: -0.1
   gated: 1
   requiredAbility: 4

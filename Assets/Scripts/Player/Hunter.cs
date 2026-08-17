@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +15,7 @@ using UnityEngine;
 [RequireComponent(typeof(KillTracker))]
 public class Hunter : MonoBehaviour
 {
+	public Animator animator;
 	public static Hunter Instance { get; private set; }
 
 	[Tooltip("The one asset every tunable number comes from.")]
@@ -83,6 +85,10 @@ public class Hunter : MonoBehaviour
 
 	private void OnEnable() => Input?.Enable();
 	private void OnDisable() => Input?.Disable();
+	public void PlayAttack()
+	{
+		animator.SetTrigger("Attack");
+	}
 
 	private void OnDestroy()
 	{

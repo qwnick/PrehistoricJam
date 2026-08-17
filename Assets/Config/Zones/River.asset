@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ZoneTuning
   type: 1
   displayName: River
-  waterDrainPerSecond: 0
+  waterDrainPerSecond: -2
   gated: 1
   requiredAbility: 2
