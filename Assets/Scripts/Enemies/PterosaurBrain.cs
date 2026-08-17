@@ -32,7 +32,17 @@ public class PterosaurBrain : EnemyBrain
 		{
 			// It commits to the landing spot. With no stamina to manage there is
 			// nothing to reconsider mid-flight.
-			if (MoveTowards(flightTarget, RunSpeed)) return;
+			switch (MoveTowards(flightTarget, RunSpeed))
+			{
+				case MoveResult.Moving:
+					return;
+
+				case MoveResult.NoRoute:
+					// Landing spot off the map — just keep putting distance between
+					// itself and the snake instead of stopping dead.
+					Steer(DirectionAwayFromHunter, RunSpeed);
+					return;
+			}
 
 			state = State.Idle;
 			return;

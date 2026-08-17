@@ -37,3 +37,14 @@ public enum LocomotionMode
 	Swimming,
 	Flying
 }
+
+/// <summary>
+/// Outcome of one step of AI movement. "Arrived" and "NoRoute" are separate
+/// because a state machine must not treat a failed path as a completed journey.
+/// </summary>
+public enum MoveResult
+{
+	Moving,
+	Arrived,
+	NoRoute
+}

@@ -55,7 +55,8 @@ public class CamelsaurBrain : EnemyBrain
 			return;
 		}
 
-		MoveTowards(RetreatPoint(FleeDistance), RunSpeed);
+		if (MoveTowards(RetreatPoint(FleeDistance), RunSpeed) == MoveResult.NoRoute)
+			Steer(DirectionAwayFromHunter, RunSpeed);
 	}
 
 	private void SeekingWater_Think()
@@ -74,7 +75,9 @@ public class CamelsaurBrain : EnemyBrain
 			return;
 		}
 
-		if (!MoveTowards(waterTarget, WalkSpeed)) state = State.Roaming;
+		// Arrived is handled by the proximity check above, so anything that is not
+		// still moving means the water is unreachable — give up and roam.
+		if (MoveTowards(waterTarget, WalkSpeed) != MoveResult.Moving) state = State.Roaming;
 	}
 
 	private void Drinking_Think()

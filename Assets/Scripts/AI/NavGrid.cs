@@ -46,6 +46,13 @@ public class NavGrid : MonoBehaviour
 	public BoundsInt Bounds => bounds;
 	public bool IsBuilt => cells != null;
 
+	/// <summary>
+	/// Whether the grid knows about any water at all. Callers use this to tell
+	/// "this creature is on dry land" apart from "the map has no water data" —
+	/// confusing the two deadlocks anything that waits to reach water.
+	/// </summary>
+	public bool HasWater { get; private set; }
+
 	private void Awake()
 	{
 		Instance = this;
@@ -66,14 +73,58 @@ public class NavGrid : MonoBehaviour
 			return;
 		}
 
-		groundTilemap.CompressBounds();
-		bounds = groundTilemap.cellBounds;
+		// The grid must span EVERY tilemap, not just the ground. Water is painted on
+		// its own layer and usually reaches past the shoreline; sizing the grid to
+		// the ground alone leaves those cells outside the world entirely, and
+		// anything standing on them can never path anywhere.
+		bounds = UnionBounds();
 		cells = new CellType[bounds.size.x * bounds.size.y];
+
+		int ground = 0, water = 0, blocked = 0;
 
 		foreach (var cell in bounds.allPositionsWithin)
 		{
-			cells[Index(cell)] = Classify(cell);
+			var type = Classify(cell);
+			cells[Index(cell)] = type;
+
+			if (type == CellType.Ground) ground++;
+			else if (type == CellType.Water) water++;
+			else blocked++;
 		}
+
+		HasWater = water > 0;
+
+		Debug.Log($"[NavGrid] {bounds.size.x}x{bounds.size.y} cells — ground {ground}, water {water}, blocked {blocked}.", this);
+
+		if (!HasWater)
+			Debug.LogWarning("[NavGrid] No water cells found. Assign the water tilemap, or paint water on its own tilemap — water-bound AI will fall back to ignoring terrain.", this);
+	}
+
+	private BoundsInt UnionBounds()
+	{
+		BoundsInt? total = null;
+
+		foreach (var map in new[] { groundTilemap, waterTilemap, obstacleTilemap })
+		{
+			if (map == null) continue;
+
+			map.CompressBounds();
+			var b = map.cellBounds;
+			if (b.size.x == 0 || b.size.y == 0) continue;
+
+			if (total == null)
+			{
+				total = b;
+				continue;
+			}
+
+			var current = total.Value;
+			var min = Vector3Int.Min(current.min, b.min);
+			var max = Vector3Int.Max(current.max, b.max);
+			total = new BoundsInt(min.x, min.y, 0, max.x - min.x, max.y - min.y, 1);
+		}
+
+		return total ?? groundTilemap.cellBounds;
 	}
 
 	private CellType Classify(Vector3Int cell)

@@ -34,6 +34,9 @@ MonoBehaviour:
   staminaDrainPerSecond: 1
   flightStaminaCost: 1
   shoreRestSeconds: 2
+  minSwimSeconds: 4
+  beachInsetCells: 4
+  waterInsetCells: 4
   drinkSeconds: 6
   nearWaterDistance: 2
   lowStaminaThreshold: 0.5

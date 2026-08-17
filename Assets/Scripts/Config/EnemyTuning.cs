@@ -69,6 +69,15 @@ public class EnemyTuning : ScriptableObject
 	[Tooltip("Crocodile: minimum seconds resting on the shore before diving again.")]
 	public float shoreRestSeconds = 2f;
 
+	[Tooltip("Crocodile: minimum seconds in the water before it may haul out again. Without this it oscillates on the waterline whenever the snake is nearby.")]
+	public float minSwimSeconds = 4f;
+
+	[Tooltip("Crocodile: how far past the waterline it walks when hauling out, in cells. Keeps it from resting with its tail in the river.")]
+	public float beachInsetCells = 2f;
+
+	[Tooltip("Crocodile: how far past the waterline it swims when going back in. Targeting the nearest water cell just parks it on the edge.")]
+	public float waterInsetCells = 4f;
+
 	[Tooltip("Camelsaur: seconds spent drinking once it reaches water. Long — this is the opening the player uses.")]
 	public float drinkSeconds = 6f;
 

@@ -111,32 +111,43 @@ public abstract class EnemyBrain : MonoBehaviour
 
 	/// <summary>
 	/// Walks towards a world point, routing around terrain when a PathFollower is
-	/// present. Returns false once there is nowhere left to go — arrived, or no
-	/// route exists — which is what the state machines use as their "done" signal.
+	/// present.
+	///
+	/// The three outcomes are kept apart on purpose. Collapsing "arrived" and "no
+	/// route" into one false made the crocodile announce it had reached the bank
+	/// the instant pathfinding failed, and then stand in the river forever.
 	/// </summary>
-	protected bool MoveTowards(Vector2 target, float speed)
+	protected MoveResult MoveTowards(Vector2 target, float speed)
+		=> MoveTowards(target, speed, tuning.navDomain);
+
+	/// <summary>
+	/// Same, but restricted to a narrower domain than the species normally uses.
+	/// The crocodile needs this: it is amphibious, yet while it is swimming it must
+	/// path through water only, or it will "flee" by strolling up the bank.
+	/// </summary>
+	protected MoveResult MoveTowards(Vector2 target, float speed, NavDomain domain)
 	{
 		if (Nav == null)
 		{
 			// No pathfinder: straight-line steering, fine for open ground.
 			Vector2 offset = target - Position;
-			if (offset.sqrMagnitude < 0.04f) { Halt(); return false; }
+			if (offset.sqrMagnitude < 0.04f) { Halt(); return MoveResult.Arrived; }
 
 			Steer(offset, speed);
-			return true;
+			return MoveResult.Moving;
 		}
 
-		if (!Nav.SetDestination(target, tuning.navDomain))
+		if (!Nav.SetDestination(target, domain))
 		{
 			Halt();
-			return false;
+			return MoveResult.NoRoute;
 		}
 
 		Vector2 direction = Nav.Steering();
-		if (direction == Vector2.zero) { Halt(); return false; }
+		if (direction == Vector2.zero) { Halt(); return MoveResult.Arrived; }
 
 		Steer(direction, speed);
-		return true;
+		return MoveResult.Moving;
 	}
 
 	/// <summary>A point roughly <paramref name="distance"/> away, directly opposite the hunter.</summary>

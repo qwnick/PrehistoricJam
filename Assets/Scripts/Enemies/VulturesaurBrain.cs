@@ -54,8 +54,8 @@ public class VulturesaurBrain : EnemyBrain
 				return;
 			}
 
-			MoveTowards(corpse.transform.position, WalkSpeed);
-			return;
+			// Unreachable carcass: fall through to wandering rather than stand and stare.
+			if (MoveTowards(corpse.transform.position, WalkSpeed) != MoveResult.NoRoute) return;
 		}
 
 		Wander();
@@ -66,7 +66,9 @@ public class VulturesaurBrain : EnemyBrain
 		// Too tired to fly is not an option — it just runs instead.
 		if (Stamina != null && !Stamina.TryConsume(tuning.flightStaminaCost))
 		{
-			MoveTowards(RetreatPoint(FleeDistance), WalkSpeed);
+			if (MoveTowards(RetreatPoint(FleeDistance), WalkSpeed) == MoveResult.NoRoute)
+				Steer(DirectionAwayFromHunter, WalkSpeed);
+
 			return;
 		}
 
@@ -89,7 +91,17 @@ public class VulturesaurBrain : EnemyBrain
 
 	private void Flying_Think()
 	{
-		if (MoveTowards(flightTarget, RunSpeed)) return;
+		switch (MoveTowards(flightTarget, RunSpeed))
+		{
+			case MoveResult.Moving:
+				return;
+
+			case MoveResult.NoRoute:
+				// Cannot route there — abandon the plan rather than hover in place.
+				targetCorpse = null;
+				state = State.Idle;
+				return;
+		}
 
 		if (targetCorpse != null)
 		{
