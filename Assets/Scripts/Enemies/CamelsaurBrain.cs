@@ -25,8 +25,8 @@ public class CamelsaurBrain : EnemyBrain
 
 	protected override void Think()
 	{
-		// Being spotted overrides everything, including a half-finished drink.
-		if (state != State.Fleeing && HasHunter && DistanceToHunter <= FleeRadius)
+		// Being spotted overrides everything
+		if (state != State.Fleeing && state!=State.Drinking && HasHunter && DistanceToHunter <= FleeRadius)
 			state = State.Fleeing;
 
 		switch (state)

@@ -16,6 +16,7 @@ public class Stamina : MonoBehaviour
 
 	[Tooltip("Seconds without spending before regeneration starts again.")]
 	[SerializeField] private float regenDelay = 0.6f;
+	[SerializeField] private EnemyStamina staminaBar;
 
 	public float Max => max;
 	public float Current { get; private set; }
@@ -33,6 +34,7 @@ public class Stamina : MonoBehaviour
 	private void Awake()
 	{
 		Current = max;
+		
 	}
 
 	public void Configure(float newMax, float newRegenPerSecond, float newRegenDelay, bool refill = true)
@@ -42,7 +44,13 @@ public class Stamina : MonoBehaviour
 		regenDelay = newRegenDelay;
 		Current = refill ? max : Mathf.Min(Current, max);
 		Changed?.Invoke();
+		if (staminaBar != null)
+		{
+			staminaBar.maxStamina = max;
+			staminaBar.currentStamina = Current;
+		}
 	}
+
 
 	public bool CanAfford(float amount) => Current >= amount;
 
@@ -95,5 +103,9 @@ public class Stamina : MonoBehaviour
 
 		Current = Mathf.Min(max, Current + regenPerSecond * Time.deltaTime);
 		Changed?.Invoke();
+		if (staminaBar != null)
+		{
+			staminaBar.currentStamina = Current;
+		}
 	}
 }

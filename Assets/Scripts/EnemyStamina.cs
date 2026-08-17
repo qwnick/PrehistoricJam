@@ -27,7 +27,8 @@ public class EnemyStamina : MonoBehaviour
 		if (staminaBarFill != null)
 		{
 			// The fillAmount expects a value between 0 and 1
-			staminaBarFill.fillAmount = currentStamina / maxStamina;
+			if (staminaBarFill.fillAmount != currentStamina / maxStamina)
+				staminaBarFill.fillAmount = currentStamina / maxStamina;
 		}
 	}
 }
