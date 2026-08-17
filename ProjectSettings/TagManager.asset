@@ -62,5 +62,8 @@ TagManager:
   - name: Tree
     uniqueID: 3215319729
     locked: 0
+  - name: Region
+    uniqueID: 2894573559
+    locked: 0
   m_RenderingLayers:
   - Default
